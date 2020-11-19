@@ -19,6 +19,8 @@ class CreateSectionsTable extends Migration
             $table->text('description')->nullable();
             $table->string('Created_by', 999)->nullable();
             $table->timestamps();
+            $table->engine = "InnoDB";
+
         });
     }
 

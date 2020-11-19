@@ -1,6 +1,8 @@
-
-  
 @extends('layouts.master')
+@section('title')
+    <title> Products</title>
+
+@endsection
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -80,10 +82,10 @@
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                      
+                        @can('اضافة منتج')
                             <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
-                                data-toggle="modal" href="#exampleModal">اضافة منتج</a>
-                        
+                            data-toggle="modal" href="#exampleModal">اضافة منتج</a> @endcan
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -109,17 +111,18 @@
                                         <td>{{ $Product->section->section_name }}</td>
                                         <td>{{ $Product->description }}</td>
                                         <td>
-                                          
+                                            @can('تعديل منتج')
+
                                                 <button class="btn btn-outline-success btn-sm"
                                                     data-name="{{ $Product->Product_name }}" data-pro_id="{{ $Product->id }}"
                                                     data-section_name="{{ $Product->section->section_name }}"
                                                     data-description="{{ $Product->description }}" data-toggle="modal"
-                                                    data-target="#edit_Product">تعديل</button>
-                                         
+                                                data-target="#edit_Product">تعديل</button> @endcan
 
+                                            @can('حذف منتج')
                                                 <button class="btn btn-outline-danger btn-sm " data-pro_id="{{ $Product->id }}"
                                                     data-product_name="{{ $Product->Product_name }}" data-toggle="modal"
-                                                    data-target="#modaldemo9">حذف</button>
+                                                data-target="#modaldemo9">حذف</button> @endcan
 
                                         </td>
                                     </tr>
@@ -307,9 +310,9 @@
             modal.find('.modal-body #pro_id').val(pro_id);
             modal.find('.modal-body #product_name').val(product_name);
         })
+
     </script>
 
 
 
 @endsection
-

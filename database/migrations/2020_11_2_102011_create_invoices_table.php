@@ -30,10 +30,11 @@ class CreateInvoicesTable extends Migration
             $table->string('Status', 50);
             $table->integer('Value_Status');
             $table->text('note')->nullable();
-            $table->date('Payment_Date')->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->engine = "InnoDB";
         });
+
     }
 
     /**
@@ -44,5 +45,6 @@ class CreateInvoicesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('invoices');
+
     }
 }

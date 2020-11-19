@@ -15,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $sections=section::all();
-        $products=product::all();
-        return view('products.products',compact('products','sections'));
+        $sections = section::all();
+        $products = product::all();
+        return view('products.products', compact('products', 'sections'));
     }
 
     /**
@@ -38,33 +38,33 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-              ////first check the section already exists or no 
-              $input=$request->all();
-              $exists=product::where('Product_name','=',$input['Product_name'])->exists();
-              if($exists){
-                       /////messages
-              toastr()->error('هذا المنتج موجود بالفعل');
-              ///////////
-              return redirect()->back();
-              }
-              
-              //validation befor store
-            $this->validate($request,[
-      'Product_name' => 'required',
+        ////first check the section already exists or no 
+        $input = $request->all();
+        $exists = product::where('Product_name', '=', $input['Product_name'])->exists();
+        if ($exists) {
+            /////messages
+            toastr()->error('هذا المنتج موجود بالفعل');
+            ///////////
+            return redirect()->back();
+        }
 
-      
-              ]);
-              ///store sections
-      
-       $section=product::create([
-      'Product_name' => $request->Product_name,
-      'description' => $request->description,
-      'section_name' => $request->section_name,
-              ]);
-              /////messages
-              toastr()->success('اتم اضافه القسم بنجاح');
-              ///////////
-              return redirect()->back();
+        //validation befor store
+        $this->validate($request, [
+            'Product_name' => 'required',
+
+
+        ]);
+        ///store sections
+
+        $section = product::create([
+            'Product_name' => $request->Product_name,
+            'description' => $request->description,
+            'section_id' => $request->section_id,
+        ]);
+        /////messages
+        toastr()->success('اتم اضافه القسم بنجاح');
+        ///////////
+        return redirect()->back();
     }
 
     /**
@@ -98,21 +98,21 @@ class ProductController extends Controller
      */
     public function update(Request $request)
     {
-        $id = product::where('section_name', $request->section_name)->first()->id;
+        $id = section::where('section_name', $request->section_name)->first()->id;
 
         $Products = Product::findOrFail($request->pro_id);
- 
+
         $Products->update([
-        'Product_name' => $request->Product_name,
-        'description' => $request->description,
-        'section_id' => $id,
+            'Product_name' => $request->Product_name,
+            'description' => $request->description,
+            'section_id' => $id,
         ]);
-             
-             //////alert
-    
-      toastr()->success('تم تعديل القسم بنجاح');
-      /////return
-            return redirect()->back();
+
+        //////alert
+
+        toastr()->success('تم تعديل القسم بنجاح');
+        /////return
+        return redirect()->back();
     }
 
     /**
@@ -121,13 +121,13 @@ class ProductController extends Controller
      * @param  \App\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        product::destroy($id);
-        
+        $Products = Product::findOrFail($request->pro_id);
+        $Products->delete();
+
         ////alert
         toastr()->success('تم مسح القسم بنجاح');
         return redirect()->back();
-
     }
 }

@@ -34,10 +34,10 @@
         <div class="card mg-b-20">
             <div class="card-header pb-0">
                 <div class="d-flex justify-content-between">
-                      
+                      @can( 'اضافة قسم')
                     <h4 class="card-title mg-b-0">      
              <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">اضافه قسم</a>
-                    </h4>
+                    </h4> @endcan
                   
                     <i class="mdi mdi-dots-horizontal text-gray"></i>
                 </div>
@@ -73,21 +73,23 @@
                                 <td>@php echo $nom @endphp</td>
                                 <td>{{ $section->section_name }}</td>
                                 <td>{{ $section->description }}</td>
-                                <td>
+                                <td>@can( 'حذف قسم')
                                     <form action="{{ route('sections.destroy',$section->id) }}" method="POST" >
                                         @csrf
 
                                  @method('DELETE')
                                  <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash-o"></i> Delete </button>
                                     </form>
+                                    @endcan
                                 </td>
                                 <td>
+                                    @can( 'تعديل قسم')
                                     <a class="modal-effect btn btn-sm btn-info" 
                                      href="#exampleModal2" title="تعديل"  data-id="{{ $section->id }}"
                                       data-section_name="{{ $section->section_name }}"
                                     data-description="{{ $section->description }}"
                                      data-toggle="modal" data-effect="effect-scale">
-                                  <i class="las la-pen"></i>Edit</a>
+                                  <i class="las la-pen"></i>Edit</a> @endcan
 
                                    
                                 </td>
